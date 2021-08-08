@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta title="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+        <title>ArcGIS API for JavaScript Tutorials: Display a map</title>
+
+        <style>
+            html, body, #viewDiv {
+                padding: 0;
+                margin: 0;
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+
+        <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/themes/light/main.css">
+        <script src="https://js.arcgis.com/4.20/"></script>
+
+        <script>
+            require([
+                "esri/config",
+                "esri/Map",
+                "esri/views/MapView",
+
+                "esri/widgets/BasemapToggle",
+                "esri/widgets/BasemapGallery"
+
+            ], function (esriConfig, Map, MapView, BasemapToggle, BasemapGallery) {
+                esriConfig.apiKey = "ESRI_API_KEY";
+
+                const map = new Map({
+                    basemap: "arcgis-topographic" // Basemap layer service
+                });
+
+                // mapview to set the location of the map to display
+                const view = new MapView({
+                    container: "viewDiv", // div element
+                    map: map,
+                    center: [-118.805, 34.027], // lon, lat
+                    zoom: 13
+                });
+
+                const basemapToggle = new BasemapToggle({
+                    view: view,
+                    nextBasemap: "arcgis-imagery"
+                });
+
+                // place the widget at bottom-rige corner of the view
+                view.ui.add(basemapToggle,"bottom-right");
+
+                // basemaps gallery
+                const basemapGallery = new BasemapGallery({
+                    view: view,
+                    source: {
+                        query: {
+                            title: '"World Basemaps for Developers" AND owner:esri'
+                        }
+                    }
+                });
+                // add basemap gallery widget to top right corner of view
+                view.ui.add(basemapGallery, "top-right");
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="viewDiv"></div>
+    </body>
+</html>

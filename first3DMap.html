@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta title="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+        <title>ArcGIS API for JavaScript Tutorials: Display a Scene</title>
+
+        <style>
+            html, body, #viewDiv {
+                padding: 0;
+                margin: 0;
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+
+        <link rel="stylesheet" href="https://js.arcgis.com/4.20/esri/themes/light/main.css">
+        <script src="https://js.arcgis.com/4.20/"></script>
+
+        <script>
+            require([
+                "esri/config",
+                "esri/Map",
+                "esri/views/SceneView"
+            ], function (esriConfig, Map, SceneView) {
+
+                esriConfig.apiKey = "ESRI_API_KEY";
+                
+                const map = new Map({
+                    basemap: "arcgis-topographic", // Basemap layer service
+                    ground: "world-elevation" // Elevation service
+                });
+
+                // SceneView to set the map, layers as well as camera position
+                const view = new SceneView({
+                    container: "viewDiv", // div element
+                    map: map,
+                    camera: {
+                        position: {
+                            x: -118.808, // Longitude
+                            y: 33.961, // Latitude
+                            z: 2000 // meters
+                        },
+                        tilt: 75 // tilt refers to no of degrees from the surface that the camera is pointed
+                    }
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <div id="viewDiv"></div>
+    </body>
+</html>
